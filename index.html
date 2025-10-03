@@ -2227,6 +2227,12 @@
 
             populateMeetingOptions('quiz-meeting-number');
             populateMeetingOptions('material-meeting-number');
+
+            // --- MATERIAL MODAL LISTENERS ---
+            document.getElementById('cancel-material').addEventListener('click', () => {
+                document.getElementById('material-modal').classList.add('hidden');
+            });
+            document.getElementById('save-material').addEventListener('click', saveMaterial);
             
             // --- QUIZ BUILDER LISTENERS ---
             document.getElementById('cancel-quiz-builder').addEventListener('click', () => document.getElementById('quiz-builder-modal').classList.add('hidden'));
