@@ -2228,6 +2228,48 @@
             populateMeetingOptions('quiz-meeting-number');
             populateMeetingOptions('material-meeting-number');
 
+            // --- LECTURER DASHBOARD NAVIGATION ---
+            document.querySelectorAll('.lecturer-sidebar-link').forEach(link => {
+                link.addEventListener('click', async (e) => {
+                    e.preventDefault();
+
+                    const currentActive = document.querySelector('.lecturer-sidebar-link.active');
+                    if (currentActive) {
+                        currentActive.classList.remove('active');
+                    }
+                    e.currentTarget.classList.add('active');
+
+                    // Hide all content tabs
+                    document.querySelectorAll('.lecturer-tab-content').forEach(tab => tab.classList.add('hidden'));
+
+                    // Show the target content tab
+                    const contentId = e.currentTarget.dataset.content;
+                    const targetContent = document.getElementById(contentId);
+                    if (targetContent) {
+                        targetContent.classList.remove('hidden');
+                    }
+
+                    // Fetch data for the selected tab
+                    switch (contentId) {
+                        case 'lecturer-students-content':
+                            await renderLecturerStudents();
+                            break;
+                        case 'lecturer-attendance-content':
+                            await renderLecturerAttendance();
+                            break;
+                        case 'lecturer-submissions-content':
+                            await renderLecturerSubmissions(document.getElementById('submission-meeting-select').value);
+                            break;
+                        case 'lecturer-scores-content':
+                            await renderLecturerScores();
+                            break;
+                        case 'lecturer-modules-content':
+                             await renderLecturerModules();
+                             break;
+                    }
+                });
+            });
+
             // --- MATERIAL MODAL LISTENERS ---
             document.getElementById('cancel-material').addEventListener('click', () => {
                 document.getElementById('material-modal').classList.add('hidden');
